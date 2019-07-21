@@ -1,5 +1,6 @@
 # Simple enough, just import everything from tkinter.
-from Tkinter import *
+from PIL import Image, ImageTk
+from tkinter import filedialog
 
 
 # Here, we are creating our class, Window, and inheriting from the Frame
@@ -31,8 +32,19 @@ class Window(Frame):
         menu = Menu(self.master)
         self.master.config(menu=menu)
 
+        #create a canvase
+        canvas = Canvas(menu, width = 500, height = 500)
+        new_file = filedialog.askopenfilename()
+        img = ImageTk.PhotoImage(file=new_file)
+        canvas.create_image(50,50, anchor=NW, image=img)
+        canvas.pack()
+
         # create the file object)
         file = Menu(menu)
+
+        # adds a command to the menu option, calling it new, and the
+        # command it runs on event is new_file
+        file.add_command(label="New", command=self.new_file())
 
         # adds a command to the menu option, calling it exit, and the
         # command it runs on event is client_exit
@@ -54,7 +66,8 @@ class Window(Frame):
     
     def client_exit(self):
         exit()
-
+    def new_file(self):
+        pass
         
 # root window created. Here, that would be the only window, but
 # you can later have windows within windows.
